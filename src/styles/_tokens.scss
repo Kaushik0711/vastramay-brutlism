@@ -155,11 +155,13 @@
   --focus-ring: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
 
   /* -------------------------------------------------------------------------
-   * Scrollbar Styles
+   * Universal Neo-Brutalist Scrollbar Tokens
    * ------------------------------------------------------------------------- */
-  --scrollbar-width: 12px;
-  --scrollbar-track: var(--color-cream);
-  --scrollbar-thumb: var(--color-ink);
-  --scrollbar-thumb-hover: var(--color-pink);
-  --scrollbar-border: 2px solid var(--color-ink);
+  --scrollbar-width: 10px;
+  --scrollbar-track: var(--color-cream, #F7F1E5);
+  --scrollbar-thumb: var(--color-ink, #171717);
+  --scrollbar-thumb-hover: var(--color-pink, #FF5C8A);
+  --scrollbar-thumb-active: var(--color-yellow, #FFE14A);
+  --scrollbar-border: var(--color-cream, #F7F1E5);
+  --scrollbar-radius: 2px;
 }

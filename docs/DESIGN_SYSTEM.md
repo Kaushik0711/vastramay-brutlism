@@ -86,18 +86,45 @@ Available in `src/styles/_mixins.scss`:
 - `@include neo-box($bg, $shadow, $border-width, $border-color, $radius)`
 - `@include neo-interactive($shadow, $hover-shadow, $press-offset)`
 - `@include neo-focus`
-- `@include neo-scrollbar`
+- `@include neo-scrollbar` (Universal cross-browser theme-matched scrollbar)
 - `@include text-balanced`
 - `@include text-pretty`
 
 ---
 
-## 7. Runtime Theme Customization (Phase 5)
+## 7. Universal Custom Scrollbar System
+
+Vastramay implements a cross-browser, theme-matched scrollbar adhering to the neo-brutalist identity without sacrificing native performance, touch accessibility, or keyboard interaction:
+
+### Design Tokens (`src/styles/_tokens.scss`)
+- `--scrollbar-width`: `10px`
+- `--scrollbar-track`: `var(--color-cream, #F7F1E5)`
+- `--scrollbar-thumb`: `var(--color-ink, #171717)`
+- `--scrollbar-thumb-hover`: `var(--color-pink, #FF5C8A)`
+- `--scrollbar-thumb-active`: `var(--color-yellow, #FFE14A)`
+- `--scrollbar-border`: `var(--color-cream, #F7F1E5)`
+- `--scrollbar-radius`: `2px`
+
+### Dual-Layer Cross-Browser Architecture
+1. **Standard CSS (Firefox & Modern Baseline)**:
+   - Sets `scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track)`
+   - Sets `scrollbar-width: thin`
+2. **WebKit/Blink Fallback & Feature Detection (Chromium 121+, Safari, Edge)**:
+   - Under CSS Scrollbars Level 1, Chromium browsers ignore `::-webkit-scrollbar` if a non-auto `scrollbar-color` is applied.
+   - Wrapped inside `@supports selector(::-webkit-scrollbar)`, the mixin safely resets `scrollbar-width: auto; scrollbar-color: auto;` on supported engines, unlocking full control over exact 10px width/height, 2px borders, hover (`#FF5C8A`), active (`#FFE14A`), and corner backgrounds.
+3. **Global & Component Application**:
+   - Automatically applied to root `html` and `body` in `src/styles/_reset.scss`.
+   - Applied globally to `.overflow-y-auto`, `.overflow-x-auto`, `.overflow-auto`, `.neo-scrollbar`, and `[data-scrollbar="neo"]` in `src/styles/globals.scss`.
+   - Explicitly integrated into UI primitives: `Modal`, `Drawer`, `DropdownMenu`, `Popover`, and shop scroll containers.
+
+---
+
+## 8. Runtime Theme Customization (Phase 5 & Scrollbar Integration)
 
 The system supports controlled runtime UI customization via `src/config/ui.ts` and `CustomizationContext.tsx`:
 
 ### Customizable Dimensions:
-1. **Colors**: Canvas background (`--bg-base`), foreground (`--fg-base`), primary accent (`--brand-primary`), secondary accent (`--brand-secondary`), blue accent (`--brand-accent`), surface (`--bg-surface`), border & shadow color (`--border-color-default`).
+1. **Colors**: Canvas background (`--bg-base`), foreground (`--fg-base`), primary accent (`--brand-primary`), secondary accent (`--brand-secondary`), blue accent (`--brand-accent`), surface (`--bg-surface`), border & shadow color (`--border-color-default`), and scrollbar thumb active accent (`--scrollbar-thumb-active`).
 2. **Geometry**:
    - Border thickness: `1px`, `2px`, `3px`, `4px`.
    - Shadow offset: `0px` (flat), `2px`, `4px`, `6px`, `8px`.
@@ -109,3 +136,4 @@ The system supports controlled runtime UI customization via `src/config/ui.ts` a
 
 ### Developer Customizer Studio:
 Located at `/dev/components` (Section 00). Allows engineers and designers to preview token combinations in real-time within an isolated sandbox without polluting customer sessions or altering production defaults.
+

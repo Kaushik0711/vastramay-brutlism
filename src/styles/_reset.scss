@@ -17,6 +17,7 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-base);
   color: var(--fg-base);
+  @include neo-scrollbar;
 
   @media (prefers-reduced-motion: reduce) {
     scroll-behavior: auto;

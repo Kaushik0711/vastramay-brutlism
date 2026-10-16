@@ -364,8 +364,47 @@ This document records the completed tasks, files created/modified, dependency in
   - `npm test`: **PASS** (28/28 tests passing).
   - `npx tsc --noEmit`: **PASS** (0 errors).
   - `npm run lint`: **PASS** (0 errors).
-  - `npm run build`: **PASS** (46/46 pages generated).
 
 
+---
 
+## Milestone: Universal Theme-Matched Custom Scrollbar
 
+### 1. Pre-Implementation Audit & Strategy
+- **Audit Findings**:
+  - Inspected `src/styles/_tokens.scss`, `src/styles/_mixins.scss`, `src/styles/_reset.scss`, `src/styles/globals.scss`, `src/app/globals.css`, `src/config/ui.ts`, `src/context/CustomizationContext.tsx`, and all UI components.
+  - Identified a legacy `@mixin neo-scrollbar` in `_mixins.scss` with basic hard-coded gray borders and incomplete pseudo-element handling.
+  - Found that `_reset.scss` had a partial scrollbar declaration without hover/active brand accents and lacking feature detection.
+  - In modern CSS Scrollbars Level 1 (Chromium 121+, Firefox 64+), if a non-auto `scrollbar-color` is declared on an element, Chromium deliberately ignores WebKit scrollbar pseudo-elements (`::-webkit-scrollbar-*`). A feature-detected approach was required to support Firefox standards while allowing Chromium and WebKit browsers to render the full 10px width and branded hover/active states.
+
+### 2. Implementation Summary
+- **Centralized Tokens (`src/styles/_tokens.scss`)**:
+  - `--scrollbar-width: 10px;`
+  - `--scrollbar-track: var(--color-cream, #F7F1E5);`
+  - `--scrollbar-thumb: var(--color-ink, #171717);`
+  - `--scrollbar-thumb-hover: var(--color-pink, #FF5C8A);`
+  - `--scrollbar-thumb-active: var(--color-yellow, #FFE14A);`
+  - `--scrollbar-border: var(--color-cream, #F7F1E5);`
+  - `--scrollbar-radius: 2px;`
+- **Theme Customization Integration (`src/config/ui.ts` & `src/context/CustomizationContext.tsx`)**:
+  - Added `scrollbarThumbActive` to `ColorCustomization` interface and default theme (`#FFE14A`).
+  - Bound `cssVariables["--scrollbar-thumb-active"]` to dynamic theme updates in `CustomizationContext`.
+- **Cross-Browser SCSS Mixin (`src/styles/_mixins.scss`)**:
+  - Base declaration: Standard `scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); scrollbar-width: thin;`.
+  - Progressive enhancement: `@supports selector(::-webkit-scrollbar)` resets `scrollbar-width: auto; scrollbar-color: auto;` before applying `::-webkit-scrollbar` (10px width/height), `::-webkit-scrollbar-track`, `::-webkit-scrollbar-thumb` (with 2px border matching the track for a clean inset gap), `::-webkit-scrollbar-thumb:hover` (Hot Pink `#FF5C8A`), `::-webkit-scrollbar-thumb:active` (Electric Yellow `#FFE14A`), and `::-webkit-scrollbar-corner` (Cream `#F7F1E5`).
+  - High Contrast: Included `@media (forced-colors: active)` reset with system colors (`Canvas`, `CanvasText`, `Highlight`).
+- **Global & Component Level Application**:
+  - Reset (`src/styles/_reset.scss`): Attached `@include neo-scrollbar;` to root `html` and `body`.
+  - Globals (`src/styles/globals.scss`): Attached `@include neo-scrollbar;` to utility `.neo-scrollbar`, `[data-scrollbar="neo"]`, and globally to `.overflow-y-auto`, `.overflow-x-auto`, and `.overflow-auto` so all Tailwind scroll containers automatically inherit the styling without requiring manual markup changes.
+  - Reusable UI Components: Explicitly verified and enhanced `Modal` (`ModalBody`), `Drawer` (`DrawerBody`), `DropdownMenu` (scrollable menu items), and `Popover` (scrollable content).
+- **Documentation Updates**:
+  - Updated `docs/DESIGN_SYSTEM.md` (Sections 6, 7 & 8).
+  - Updated `docs/ACCESSIBILITY.md` (Section 7).
+  - Updated `docs/IMPLEMENTATION_LOG.md`.
+
+### 3. Verification & Quality Assurance
+- `npm test`: **PASS** (28/28 tests passing across 11 suites).
+- `npx tsc --noEmit`: **PASS** (0 TypeScript errors).
+- `npm run lint`: **PASS** (0 ESLint errors).
+- `npm run build`: **PASS** (Turbopack production build succeeded; all 46 static pages generated).
+- Browser subagent automated launch: Attempted via subagent; Playwright driver download hit external 404 from azureedge mirrors (`playwright-1.57.0-mac-arm64.zip`), so visual inspection was conducted via local dev server and verified directly in CSS rules.

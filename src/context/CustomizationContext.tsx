@@ -127,6 +127,7 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
       "--scrollbar-track": colors.scrollbarTrack,
       "--scrollbar-thumb": colors.scrollbarThumb,
       "--scrollbar-thumb-hover": colors.scrollbarThumbHover,
+      "--scrollbar-thumb-active": colors.scrollbarThumbActive || "#FFE14A",
 
       "--border-width-base": bw,
       "--border-width-thick": `${geometry.borderWidth + 1}px`,

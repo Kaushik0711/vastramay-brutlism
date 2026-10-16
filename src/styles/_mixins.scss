@@ -54,28 +54,59 @@
   }
 }
 
-/* Custom Neo-Brutalist Scrollbar */
+/* Custom Universal Neo-Brutalist Scrollbar */
 @mixin neo-scrollbar {
+  // Standard CSS Scrollbars (Firefox and standards-compliant engines)
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-color: var(--scrollbar-thumb, #171717) var(--scrollbar-track, #F7F1E5);
 
-  &::-webkit-scrollbar {
-    width: var(--scrollbar-width);
-    height: var(--scrollbar-width);
+  // WebKit / Blink Feature Detection (Chromium, Edge, Safari macOS/iOS)
+  // When ::-webkit-scrollbar selector is supported, reset standard properties so Chromium
+  // honors pseudo-element sizing, borders, hover accents, and active accents.
+  @supports selector(::-webkit-scrollbar) {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width, 10px);
+      height: var(--scrollbar-width, 10px);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track, #F7F1E5);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb, #171717);
+      border: 2px solid var(--scrollbar-border, var(--scrollbar-track, #F7F1E5));
+      border-radius: var(--scrollbar-radius, 2px);
+      min-height: 24px;
+      min-width: 24px;
+
+      &:hover {
+        background: var(--scrollbar-thumb-hover, #FF5C8A);
+      }
+
+      &:active {
+        background: var(--scrollbar-thumb-active, #FFE14A);
+      }
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: var(--scrollbar-track, #F7F1E5);
+    }
   }
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
-    border-left: var(--border-width-hairline) solid var(--color-ink);
-  }
+  // Windows High-Contrast Mode & Forced Colors Accessibility
+  @media (forced-colors: active) {
+    scrollbar-color: auto;
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border: 2px solid var(--scrollbar-track);
-    border-radius: var(--radius-none);
+    &::-webkit-scrollbar-thumb {
+      background: ButtonText;
+    }
 
-    &:hover {
-      background: var(--scrollbar-thumb-hover);
+    &::-webkit-scrollbar-track {
+      background: Canvas;
     }
   }
 }

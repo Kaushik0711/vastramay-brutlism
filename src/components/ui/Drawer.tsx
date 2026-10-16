@@ -192,7 +192,7 @@ export function DrawerBody({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("p-6 flex-1 overflow-y-auto font-body text-sm", className)} {...props}>
+    <div className={cn("p-6 flex-1 overflow-y-auto neo-scrollbar font-body text-sm", className)} {...props}>
       {children}
     </div>
   );

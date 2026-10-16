@@ -81,7 +81,7 @@ export function Popover({
             animate="visible"
             exit="exit"
             className={cn(
-              "absolute z-[var(--z-dropdown)] p-4 bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] min-w-[240px]",
+              "absolute z-[var(--z-dropdown)] p-4 max-h-[360px] overflow-y-auto neo-scrollbar bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] min-w-[240px]",
               sideClasses[side],
               (side === "top" || side === "bottom") && alignClasses[align],
               className

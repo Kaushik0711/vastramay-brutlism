@@ -68,3 +68,14 @@
 .text-pretty {
   @include text-pretty;
 }
+
+/* -------------------------------------------------------------------------
+ * Universal Neo-Brutalist Scrollbar Utilities
+ * ------------------------------------------------------------------------- */
+.neo-scrollbar,
+[data-scrollbar="neo"],
+.overflow-y-auto,
+.overflow-x-auto,
+.overflow-auto {
+  @include neo-scrollbar;
+}

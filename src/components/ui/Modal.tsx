@@ -216,7 +216,7 @@ export function ModalBody({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("p-6 max-h-[70vh] overflow-y-auto font-body text-sm", className)} {...props}>
+    <div className={cn("p-6 max-h-[70vh] overflow-y-auto neo-scrollbar font-body text-sm", className)} {...props}>
       {children}
     </div>
   );

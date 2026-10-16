@@ -17,6 +17,7 @@ export interface ColorCustomization {
   scrollbarTrack: string;
   scrollbarThumb: string;
   scrollbarThumbHover: string;
+  scrollbarThumbActive: string;
 }
 
 export interface GeometryCustomization {
@@ -52,6 +53,7 @@ export const DEFAULT_THEME_CUSTOMIZATION: ThemeCustomization = {
     scrollbarTrack: "#F7F1E5",
     scrollbarThumb: "#171717",
     scrollbarThumbHover: "#FF5C8A",
+    scrollbarThumbActive: "#FFE14A",
   },
   geometry: {
     borderWidth: 2,

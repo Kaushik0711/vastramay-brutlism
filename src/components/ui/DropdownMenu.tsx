@@ -83,7 +83,7 @@ export function DropdownMenu({
             animate="visible"
             exit="exit"
             className={cn(
-              "absolute z-[var(--z-dropdown)] mt-2 min-w-[200px] p-1.5 bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] outline-none",
+              "absolute z-[var(--z-dropdown)] mt-2 min-w-[200px] max-h-[320px] overflow-y-auto neo-scrollbar p-1.5 bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] outline-none",
               align === "right" ? "right-0" : "left-0",
               className
             )}
