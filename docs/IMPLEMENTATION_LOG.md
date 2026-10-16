@@ -1,151 +1,67 @@
-# Phase 1 Implementation Log
+# Vastramay Implementation Log
 
 This document records the completed tasks, files created/modified, dependency installation, validation results, and next phase objectives for **Vastramay**.
 
 ---
 
-## 1. Summary of Completed Work
+## Milestone: Phase 2 — Complete the Neo-Brutalism Component Library
 
-- **Project Scaffolding**: Initialized Next.js 16.4.2 App Router with TypeScript, Tailwind CSS, and ESLint inside a clean `src/` directory.
-- **Dependency Integration**: Installed and configured `sass`, `motion`, `lucide-react`, `react-hook-form`, `zod`, `@hookform/resolvers`, `clsx`, and `tailwind-merge`.
-- **Neo-Brutalism Design Tokens**:
-  - Implemented centralized CSS variables in `src/styles/_tokens.scss` with the exact 6-color palette (Warm Cream `#F7F1E5`, Hot Pink `#FF5C8A`, Electric Yellow `#FFE14A`, Cobalt Blue `#4867F5`, Ink Black `#171717`, White `#FFFFFF`).
-  - Added zero-blur hard shadow definitions (`--shadow-sm`, `--shadow-base`, `--shadow-md`, `--shadow-lg`, `--shadow-xl`, color shadows).
-  - Added border widths (`1px`, `2px`, `3px`, `4px`), border radii (`0px`, `2px`, `4px`, `6px`, `8px`, `9999px`), z-index layers, transitions, focus rings, and custom scrollbar tokens.
-  - Linked CSS custom properties to Tailwind CSS v4 `@theme` in `src/app/globals.css`.
-- **Three-Font System**: Configured `next/font/google` with `Syne` (Bold Display), `Plus_Jakarta_Sans` (Sans Body), and `Playfair_Display` (Editorial Fashion Highlight) with `display: 'swap'` and CSS variables.
-- **SCSS Architecture**:
-  - Created `src/styles/_mixins.scss` for `@mixin neo-box`, `@mixin neo-interactive`, `@mixin neo-focus`, `@mixin neo-scrollbar`, and modern typography wrapping (`text-wrap: balance`, `text-wrap: pretty`).
-  - Created `src/styles/_reset.scss` for element resets, text selection, and accessible focus styles.
-  - Created `src/styles/globals.scss` aggregating tokens, mixins, and resets.
-- **Application Shell & Error Boundaries**:
-  - `src/app/layout.tsx` incorporating metadata, openGraph, font variables, header, footer, and provider wrap.
-  - `src/app/loading.tsx` minimal branded neo-brutalist loading state.
-  - `src/app/not-found.tsx` custom 404 page with return-home and explore actions.
-  - `src/app/error.tsx` client-side segment error boundary.
-  - `src/app/global-error.tsx` root layout crash boundary.
-  - `src/app/page.tsx` foundational homepage shell displaying the design tokens, fonts, and architecture status.
-- **Reusable Primitive Components**:
-  - `src/components/ui/Button.tsx` + `Button.module.scss`: 6 variants (`primary`, `secondary`, `accent`, `dark`, `outline`, `ghost`), 4 sizes, active push-down physics.
-  - `src/components/ui/Badge.tsx` + `Badge.module.scss`: 6 colorways, 3 shapes (`square`, `rounded`, `pill`).
-  - `src/components/ui/Card.tsx` + `Card.module.scss`: Thick borders, color shadow options, interactive hover states.
-  - `src/components/ui/Container.tsx`: Standard responsive layout container.
-- **Layout Components**:
-  - `src/components/layout/AnnouncementBar.tsx` + `AnnouncementBar.module.scss`: Infinite marquee ticker strip.
-  - `src/components/layout/Header.tsx`: Responsive sticky header, brand logo, search trigger, cart badge, mobile drawer.
-  - `src/components/layout/Navigation.tsx`: Navigation links with active brutalist badge state.
-  - `src/components/layout/Footer.tsx`: Value props strip, site links, newsletter input shell, copyright.
-- **Domain Foundation & Types**:
-  - `src/types/index.ts`: TypeScript contracts for `Product`, `ProductVariant`, `CategoryItem`, `NavItem`, `CartItem`, `SiteConfig`.
-  - `src/config/site.ts`: Site metadata, navigation items, announcements.
-  - `src/config/theme.ts`: TypeScript theme token constants.
-  - `src/data/categories.ts`: Category dataset (Menswear, Womenswear, Nehru Jackets, Sarees, Streetwear).
-  - `src/data/products.ts`: Sample product records with variants, prices, and tags.
-  - `src/components/product/PriceTag.tsx`: Formatted price with discount calculation.
-  - `src/components/product/ProductCard.tsx`: Neo-brutalist product card skeleton.
-  - `src/components/shop/CategoryNav.tsx`: Horizontal scrolling category pill tabs.
-  - `src/components/providers/AppProviders.tsx`: Context provider shell.
-- **Custom Hooks**:
-  - `src/hooks/useMediaQuery.ts`: React 19 `useSyncExternalStore` media query hook.
-  - `src/hooks/useScrollPosition.ts`: Window scroll position monitor.
-- **Shared Helpers**:
-  - `src/lib/utils.ts`: `cn()` class merger, `formatCurrency()`, `slugify()`.
-- **Documentation**:
-  - Complete 6-document documentation suite created in `docs/`.
+### 1. Summary of Completed Work
 
----
-
-## 2. Files Created & Modified
-
-### New Files Created
-1. `src/styles/_tokens.scss`
-2. `src/styles/_mixins.scss`
-3. `src/styles/_reset.scss`
-4. `src/styles/globals.scss`
-5. `src/lib/utils.ts`
-6. `src/types/index.ts`
-7. `src/config/site.ts`
-8. `src/config/theme.ts`
-9. `src/data/categories.ts`
-10. `src/data/products.ts`
-11. `src/hooks/useMediaQuery.ts`
-12. `src/hooks/useScrollPosition.ts`
-13. `src/components/ui/Container.tsx`
-14. `src/components/ui/Button.module.scss`
-15. `src/components/ui/Button.tsx`
-16. `src/components/ui/Badge.module.scss`
-17. `src/components/ui/Badge.tsx`
-18. `src/components/ui/Card.module.scss`
-19. `src/components/ui/Card.tsx`
-20. `src/components/layout/AnnouncementBar.module.scss`
-21. `src/components/layout/AnnouncementBar.tsx`
-22. `src/components/layout/Navigation.tsx`
-23. `src/components/layout/Header.tsx`
-24. `src/components/layout/Footer.tsx`
-25. `src/components/cart/CartBadge.tsx`
-26. `src/components/product/PriceTag.tsx`
-27. `src/components/product/ProductCard.tsx`
-28. `src/components/shop/CategoryNav.tsx`
-29. `src/components/providers/AppProviders.tsx`
-30. `src/app/loading.tsx`
-31. `src/app/not-found.tsx`
-32. `src/app/error.tsx`
-33. `src/app/global-error.tsx`
-34. `docs/README.md`
-35. `docs/PROJECT_STRUCTURE.md`
-36. `docs/TECH_STACK.md`
-37. `docs/DESIGN_SYSTEM.md`
-38. `docs/DEVELOPMENT_SETUP.md`
-39. `docs/IMPLEMENTATION_LOG.md`
-
-### Modified Files
-1. `src/app/globals.css` (Configured Tailwind v4 `@theme` with CSS variables)
-2. `src/app/layout.tsx` (Configured Google fonts, meta tags, and layout frame)
-3. `src/app/page.tsx` (Replaced boilerplate with Phase 1 design system showcase)
-4. `next.config.ts` (Added `images.remotePatterns` for Unsplash images)
-5. `package.json` (Added required dependencies)
+- **Pre-Implementation Audit**: Audited existing Phase 1 components, identifying gaps in `Button`, `Badge`, `Card`, `ProductCard`, and `PriceTag`.
+- **Motion & Physics Standards**:
+  - Created `src/lib/motion.ts` with centralized Motion v12 variants: `modalVariants`, `drawerRightVariants`, `drawerLeftVariants`, `drawerBottomVariants`, `toastVariants`, `dropdownVariants`, `backdropVariants`, and `staggerContainer`.
+  - Added `src/config/ui.ts` defining reusable UI defaults for toasts, overlays, tooltips, and transitions.
+  - Implemented `src/lib/scroll-lock.ts` for leak-free document body scroll locking with scrollbar width compensation.
+- **Improved Existing Components**:
+  - `Button`: Added `href` link rendering, `fullWidth`, `leadingIcon`/`trailingIcon`, `aria-busy` indicator, and default `type="button"`.
+  - `Badge`: Added 5 semantic variants (`success`, `warning`, `error`, `info`, `neutral`), 3 sizes (`sm`, `md`, `lg`), and optional icon support.
+  - `Card`: Added configurable borders (`hairline`, `base`, `thick`, `heavy`), shadows (`none`, `sm`, `base`, `md`, `lg`, `xl`, colors), backgrounds, keyboard interaction (`Enter`/`Space`), and child components (`CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`).
+  - `ProductCard`: Added image fallback for broken remote URLs, interactive wishlist toggle with state, functional `onQuickView` callback, and sold out indicator.
+  - `PriceTag`: Added screen-reader accessible hidden labels (`Current price:`, `Original price:`, `Discount:`).
+- **New Form Primitives**:
+  - `Label`: Form label with required asterisk.
+  - `Input`: Neo-brutalist text input with leading/trailing adornments and error styling.
+  - `Textarea`: Multi-line text input with character limit and counter.
+  - `Select`: Accessible dropdown select with custom chevron indicator.
+  - `Checkbox`: Square brutalist checkbox with check icon.
+  - `RadioGroup` & `RadioItem`: Radio selection system.
+  - `Switch`: Sliding physical toggle switch.
+  - `FormField`: Field wrapper with accessible `role="alert"` error bindings.
+- **New Feedback Components**:
+  - `Alert`: Semantic inline alerts with dismiss actions.
+  - `Spinner`: Geometric spinners in 4 sizes and 5 colors.
+  - `Skeleton`: Content loading placeholders.
+  - `EmptyState`: Framed illustration, title, description, and action button.
+  - `ErrorState`: Error container with error message toggle and retry action.
+  - `Progress`: Accessible ARIA progressbar.
+  - `Toast Subsystem`: Reactive store (`toastStore`), `toast.success()`, `toast.error()`, `toast.warning()`, `toast.info()`, `toast.custom()`, `ToastProvider`, and `ToastItem` with pause-on-hover.
+- **New Overlay & Navigation Primitives**:
+  - `Modal`: Accessible dialog with focus trap, body scroll lock, Escape dismissal, and child composition.
+  - `ConfirmDialog`: Confirmation modal for destructive actions.
+  - `Drawer`: Sliding sidebar panel supporting right, left, and bottom placements.
+  - `DropdownMenu`: Contextual menu with outside dismissal and keyboard escape.
+  - `Popover`: Floating content bubble with directional alignments.
+  - `Tooltip`: Hover/focus disclosure balloon with keyboard escape dismiss.
+  - `Accordion`: Expandable/collapsible panels with single or multiple expand options.
+  - `Tabs`: Tab list and panels with arrow key cycling.
+  - `Breadcrumbs`: Hierarchy navigation with page context.
+  - `Pagination`: Page number pills with Previous/Next controls.
+  - `Barrel Export`: `src/components/ui/index.ts` exporting the entire component library.
+- **Component Showcase Route**:
+  - Implemented `/dev/components` (`src/app/dev/components/page.tsx` + `layout.tsx`) with `robots: { index: false, follow: false }`, featuring interactive demonstration matrices for every single component.
+- **Documentation Suite**:
+  - Created `docs/COMPONENT_LIBRARY.md` (complete API reference).
+  - Created `docs/ANIMATION_SYSTEM.md` (motion physics & reduced-motion rules).
+  - Created `docs/ACCESSIBILITY.md` (WCAG 2.1 AA keyboard & ARIA rules).
+  - Updated `docs/README.md` and `docs/PROJECT_STRUCTURE.md`.
 
 ---
 
-## 3. Dependencies Installed
+### 2. Validation & Quality Checks
 
-```json
-{
-  "dependencies": {
-    "next": "16.4.2",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "sass": "^1.97.3",
-    "motion": "^12.38.0",
-    "lucide-react": "^1.16.0",
-    "react-hook-form": "^7.71.2",
-    "zod": "^4.6.7",
-    "@hookform/resolvers": "^5.2.2",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.5.0"
-  }
-}
-```
-
----
-
-## 4. Verification & Validation Commands
-
-All quality checks were executed and passed cleanly:
-
-| Command | Status | Result |
+| Check | Tool | Result |
 | :--- | :--- | :--- |
-| `npx tsc --noEmit` | **PASS** | 0 errors across all TypeScript files |
-| `npm run lint` | **PASS** | 0 errors, 0 warnings (ESLint with Next.js & React 19 rules) |
-| `npm run build` | **PASS** | Successfully created optimized production bundle in 385ms via Turbopack |
-
----
-
-## 5. Next Steps (Phase 2 Preview)
-
-Phase 1 foundation is complete. Phase 2 (Product Catalog & Shopping Experience) will build on this architecture:
-- Product listing pages (`/shop`, `/shop/[gender]`, `/shop/[gender]/[category]`).
-- Faceted filtering (size, color, price range, fabric).
-- Sorting controls (price high/low, newest, popularity).
-- Product details page (gallery carousel, size selector, sticky add to cart bar).
-- Cart state management (local storage / drawer).
+| **Strict Type Check** | `npx tsc --noEmit` | **PASS**: 0 errors across entire workspace |
+| **Linting** | `npm run lint` | **PASS**: 0 errors, 0 warnings (clean ESLint run) |
+| **Production Build** | `npm run build` | **PASS**: Successfully compiled via Turbopack in 810ms with all 5 static pages prerendered (`/`, `/_not-found`, `/dev/components`) |

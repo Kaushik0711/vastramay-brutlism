@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/types";
@@ -6,60 +8,126 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { PriceTag } from "./PriceTag";
 import { Button } from "@/components/ui/Button";
-import { Eye } from "lucide-react";
+import { Eye, Heart, ImageOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface ProductCardProps {
   product: Product;
   priority?: boolean;
+  isWishlisted?: boolean;
+  onWishlistToggle?: (productId: string) => void;
+  onQuickView?: (product: Product) => void;
+  className?: string;
 }
 
-export function ProductCard({ product, priority = false }: ProductCardProps) {
-  const primaryImage = product.images[0] || {
+export function ProductCard({
+  product,
+  priority = false,
+  isWishlisted = false,
+  onWishlistToggle,
+  onQuickView,
+  className,
+}: ProductCardProps) {
+  const [imgError, setImgError] = useState(false);
+  const [internalWishlisted, setInternalWishlisted] = useState(isWishlisted);
+
+  const primaryImage = product.images?.[0] || {
     src: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
     alt: product.title,
   };
 
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setInternalWishlisted((prev) => !prev);
+    onWishlistToggle?.(product.id);
+  };
+
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onQuickView?.(product);
+  };
+
+  const isOutOfStock = product.variants && product.variants.every((v) => !v.inStock || v.stock === 0);
+
   return (
     <Card
       interactive
-      className="group flex flex-col h-full bg-brand-white border-2 border-brand-ink shadow-neo hover:shadow-neo-md transition-all"
+      className={cn(
+        "group flex flex-col h-full bg-brand-white border-2 border-brand-ink shadow-neo hover:shadow-neo-md transition-all",
+        className
+      )}
     >
       {/* Product Image Frame */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-brand-cream border-b-2 border-brand-ink">
-        <Image
-          src={primaryImage.src}
-          alt={primaryImage.alt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={priority}
-          className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
-        />
+        {!imgError ? (
+          <Image
+            src={primaryImage.src}
+            alt={primaryImage.alt || product.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
+            onError={() => setImgError(true)}
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full h-full bg-neutral-200 text-neutral-500 gap-2 p-4 text-center">
+            <ImageOff className="w-8 h-8" />
+            <span className="font-mono text-xs">Image unavailable</span>
+          </div>
+        )}
 
         {/* Floating Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 pointer-events-none">
           {product.isNewArrival && (
-            <Badge variant="pink" shape="square">
+            <Badge variant="pink" shape="square" size="sm">
               NEW DROP
             </Badge>
           )}
           {product.isBestSeller && (
-            <Badge variant="yellow" shape="square">
+            <Badge variant="yellow" shape="square" size="sm">
               BESTSELLER
+            </Badge>
+          )}
+          {isOutOfStock && (
+            <Badge variant="dark" shape="square" size="sm">
+              SOLD OUT
             </Badge>
           )}
         </div>
 
+        {/* Wishlist Button */}
+        <button
+          type="button"
+          onClick={handleWishlist}
+          aria-label={internalWishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
+          className={cn(
+            "absolute top-3 right-3 z-10 p-2 border-2 border-brand-ink shadow-neo-sm transition-all duration-150 cursor-pointer",
+            internalWishlisted
+              ? "bg-brand-pink text-brand-ink"
+              : "bg-brand-white text-brand-ink hover:bg-brand-yellow"
+          )}
+        >
+          <Heart
+            className={cn("w-4 h-4 stroke-[2.2]", internalWishlisted && "fill-brand-ink")}
+          />
+        </button>
+
         {/* Quick View Button on Hover */}
-        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full justify-center bg-brand-white/95 backdrop-blur-sm"
-            leftIcon={<Eye className="w-4 h-4" />}
-          >
-            QUICK VIEW
-          </Button>
-        </div>
+        {onQuickView && (
+          <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleQuickView}
+              className="w-full justify-center bg-brand-white/95 backdrop-blur-sm"
+              leadingIcon={<Eye className="w-4 h-4" />}
+            >
+              QUICK VIEW
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Product Details */}
@@ -89,7 +157,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           />
 
           <span className="text-[11px] font-mono font-bold text-neutral-500">
-            {product.variants.length} SIZES
+            {product.variants?.length || 0} SIZES
           </span>
         </div>
       </div>

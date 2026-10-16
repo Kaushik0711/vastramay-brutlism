@@ -6,6 +6,9 @@ This document outlines the organization and architectural boundaries of the **Va
 vastramay/
 ├── docs/                               # Architecture and development documentation
 │   ├── README.md                       # Documentation hub and index
+│   ├── COMPONENT_LIBRARY.md            # Complete UI library API reference
+│   ├── ANIMATION_SYSTEM.md             # Motion presets and transition rules
+│   ├── ACCESSIBILITY.md                # WCAG 2.1 AA keyboard and ARIA standards
 │   ├── PROJECT_STRUCTURE.md            # Directory and file boundaries (this file)
 │   ├── TECH_STACK.md                   # Dependencies, versions, and rationale
 │   ├── DESIGN_SYSTEM.md                # Colors, fonts, tokens, and mixins
@@ -14,6 +17,10 @@ vastramay/
 ├── public/                             # Static public assets (images, icons)
 ├── src/
 │   ├── app/                            # Next.js App Router root
+│   │   ├── dev/
+│   │   │   └── components/
+│   │   │       ├── layout.tsx          # Unindexed dev route layout
+│   │   │       └── page.tsx            # Comprehensive Component Showcase page
 │   │   ├── error.tsx                   # Segment error boundary (client component)
 │   │   ├── global-error.tsx            # Root application crash fallback
 │   │   ├── globals.css                 # Tailwind CSS v4 entry point with @theme tokens
@@ -32,22 +39,55 @@ vastramay/
 │   │   │   └── Navigation.tsx          # Main navigation links with active state
 │   │   ├── product/                    # Product presentation primitives
 │   │   │   ├── PriceTag.tsx            # Price formatting with discount percentage
-│   │   │   └── ProductCard.tsx         # Neo-brutalist product card skeleton
+│   │   │   └── ProductCard.tsx         # Neo-brutalist product card (wishlist + quick view)
 │   │   ├── providers/                  # Client-side context providers
-│   │   │   └── AppProviders.tsx        # Application provider wrapper
+│   │   │   └── AppProviders.tsx        # ToastProvider & application context wrapper
 │   │   ├── shop/                       # Catalog filters and taxonomy
 │   │   │   └── CategoryNav.tsx         # Category pill tabs
-│   │   └── ui/                         # Reusable primitive UI components
+│   │   └── ui/                         # Complete Neo-Brutalism UI Component Library
+│   │       ├── toast/                  # Toast notification subsystem
+│   │       │   ├── index.ts            # Toast exports
+│   │       │   ├── toast-store.ts      # Reactive toast state manager
+│   │       │   ├── toast-types.ts      # Toast TypeScript interfaces
+│   │       │   ├── ToastItem.tsx       # Animated toast card
+│   │       │   └── ToastProvider.tsx   # Toast container portal
+│   │       ├── Accordion.tsx           # Collapsible FAQ and details panels
+│   │       ├── Alert.tsx               # Inline semantic alerts
 │   │       ├── Badge.module.scss       # Badge styles and shapes
 │   │       ├── Badge.tsx               # Neo-brutalist tag and pill component
+│   │       ├── Breadcrumbs.tsx         # Breadcrumb navigation
 │   │       ├── Button.module.scss      # Button active push-down physics
 │   │       ├── Button.tsx              # Reusable button with 6 variants & sizes
 │   │       ├── Card.module.scss        # Card borders and hard shadow presets
-│   │       ├── Card.tsx                # Neo-brutalist container card
-│   │       └── Container.tsx           # Responsive content width constraint
+│   │       ├── Card.tsx                # Card component with composition children
+│   │       ├── Checkbox.tsx            # Square neo-brutalist checkbox
+│   │       ├── ConfirmDialog.tsx       # Confirmation modal
+│   │       ├── Container.tsx           # Responsive content width constraint
+│   │       ├── Drawer.tsx              # Sliding sidebar drawer (right/left/bottom)
+│   │       ├── DropdownMenu.tsx        # Popdown contextual menu
+│   │       ├── EmptyState.tsx          # Framed empty state
+│   │       ├── ErrorState.tsx          # Error presentation with retry
+│   │       ├── FormField.tsx           # Label, Input, and Error wrapper
+│   │       ├── index.ts                # UI library barrel export
+│   │       ├── Input.module.scss       # Input SCSS module
+│   │       ├── Input.tsx               # Text input with prefix/suffix icons
+│   │       ├── Label.tsx               # Form label with required asterisk
+│   │       ├── Modal.tsx               # Accessible dialog modal
+│   │       ├── Pagination.tsx          # Page number controls
+│   │       ├── Popover.tsx             # Floating popover bubble
+│   │       ├── Progress.tsx            # Progress bar
+│   │       ├── RadioGroup.tsx          # Radio group and radio items
+│   │       ├── Select.tsx              # Dropdown select with custom chevron
+│   │       ├── Skeleton.tsx            # Pulsing skeleton placeholder
+│   │       ├── Spinner.tsx             # Geometric spinner
+│   │       ├── Switch.tsx              # Sliding toggle switch
+│   │       ├── Tabs.tsx                # Tab list and panels
+│   │       ├── Textarea.tsx            # Multi-line text input with char count
+│   │       └── Tooltip.tsx             # Accessible tooltip bubble
 │   ├── config/                         # Static application configurations
 │   │   ├── site.ts                     # Metadata, nav items, announcements
-│   │   └── theme.ts                    # Design system constants for TypeScript
+│   │   ├── theme.ts                    # Design system constants for TypeScript
+│   │   └── ui.ts                       # UI defaults (toasts, overlays, transitions)
 │   ├── data/                           # Mock datasets and category taxonomy
 │   │   ├── categories.ts               # Apparel category catalog
 │   │   └── products.ts                 # Sample clothing products with variants
@@ -55,6 +95,8 @@ vastramay/
 │   │   ├── useMediaQuery.ts            # Viewport query listener via useSyncExternalStore
 │   │   └── useScrollPosition.ts        # Window scroll monitor via useSyncExternalStore
 │   ├── lib/                            # Shared utilities and helpers
+│   │   ├── motion.ts                   # Central Motion presets and transitions
+│   │   ├── scroll-lock.ts              # Document body scroll locking utility
 │   │   └── utils.ts                    # Class merger (cn), formatCurrency, slugify
 │   ├── styles/                         # Design system styling engine
 │   │   ├── _mixins.scss                # Reusable SCSS mixins (neo-box, neo-interactive)
@@ -68,29 +110,3 @@ vastramay/
 ├── tsconfig.json                       # Strict TypeScript compiler options
 └── eslint.config.mjs                   # ESLint configuration
 ```
-
----
-
-## Directory Responsibilities
-
-### `src/app/`
-- **Responsibility**: Routing, layouts, error boundaries, loading states, and page compositions.
-- **Rule**: Keep route files focused on fetching and layout assembly; extract UI into `src/components/`.
-
-### `src/components/ui/`
-- **Responsibility**: Reusable, atomic visual primitives that have zero business logic (Button, Badge, Card, Container).
-- **Rule**: Primitives must use SCSS modules for complex micro-interactions (e.g. brutalist push-down physics) combined with Tailwind for layout.
-
-### `src/components/layout/`
-- **Responsibility**: High-level visual frame shared across the application: Header, Footer, Navigation, and AnnouncementBar.
-
-### `src/components/product/` & `src/components/shop/`
-- **Responsibility**: Domain-specific UI components for clothing items, price displays, size selectors, and category navigation.
-
-### `src/styles/`
-- **Responsibility**: Centralized design tokens (`_tokens.scss`), mixins (`_mixins.scss`), global resets (`_reset.scss`), and global utility classes (`globals.scss`).
-- **Rule**: Single source of truth for raw hex codes, shadow formulas, and transition curves.
-
-### `src/types/`
-- **Responsibility**: TypeScript type definitions shared across the entire frontend.
-- **Rule**: Strict types for all product models, variants, cart items, and component contracts.

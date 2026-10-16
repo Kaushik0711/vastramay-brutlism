@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import styles from "./Button.module.scss";
 
@@ -17,9 +18,13 @@ export interface ButtonProps
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  asChild?: boolean;
+  fullWidth?: boolean;
+  leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
+  leftIcon?: React.ReactNode;   // Backwards-compatible alias
+  rightIcon?: React.ReactNode;  // Backwards-compatible alias
+  href?: string;
+  external?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -29,14 +34,23 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       size = "md",
       isLoading = false,
+      fullWidth = false,
+      leadingIcon,
+      trailingIcon,
       leftIcon,
       rightIcon,
+      href,
+      external,
       className,
       disabled,
+      type = "button",
       ...props
     },
     ref
   ) => {
+    const startIcon = leadingIcon ?? leftIcon;
+    const endIcon = trailingIcon ?? rightIcon;
+
     const variantClass = {
       primary: styles.variantPrimary,
       secondary: styles.variantSecondary,
@@ -53,20 +67,59 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: styles.sizeIcon,
     }[size];
 
+    const combinedClassName = cn(
+      styles.neoBtn,
+      variantClass,
+      sizeClass,
+      fullWidth && styles.fullWidth,
+      className
+    );
+
+    // If href is provided, render accessible Next.js Link
+    if (href) {
+      if (external) {
+        return (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={combinedClassName}
+          >
+            {startIcon}
+            {children && <span>{children}</span>}
+            {endIcon}
+          </a>
+        );
+      }
+      return (
+        <Link href={href} className={combinedClassName}>
+          {startIcon}
+          {children && <span>{children}</span>}
+          {endIcon}
+        </Link>
+      );
+    }
+
     return (
       <button
         ref={ref}
+        type={type}
         disabled={disabled || isLoading}
-        className={cn(styles.neoBtn, variantClass, sizeClass, className)}
+        aria-busy={isLoading}
+        className={combinedClassName}
         {...props}
       >
         {isLoading ? (
-          <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          <span
+            className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+            role="status"
+            aria-label="Loading"
+          />
         ) : (
-          leftIcon
+          startIcon
         )}
-        <span>{children}</span>
-        {!isLoading && rightIcon}
+        {children && <span>{children}</span>}
+        {!isLoading && endIcon}
       </button>
     );
   }

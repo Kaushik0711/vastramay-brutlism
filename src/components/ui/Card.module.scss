@@ -7,12 +7,57 @@
   overflow: hidden;
   transition: transform var(--duration-fast) var(--ease-neo),
               box-shadow var(--duration-fast) var(--ease-neo);
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
 }
 
-.cardThick {
+/* Border Thickness */
+.borderHairline {
+  border-width: var(--border-width-hairline);
+}
+.borderBase {
+  border-width: var(--border-width-base);
+}
+.borderThick {
   border-width: var(--border-width-thick);
 }
+.borderHeavy {
+  border-width: var(--border-width-heavy);
+}
 
+/* Shadows */
+.shadowNone {
+  box-shadow: var(--shadow-none);
+}
+.shadowSm {
+  box-shadow: var(--shadow-sm);
+}
+.shadowBase {
+  box-shadow: var(--shadow-base);
+}
+.shadowMd {
+  box-shadow: var(--shadow-md);
+}
+.shadowLg {
+  box-shadow: var(--shadow-lg);
+}
+.shadowXl {
+  box-shadow: var(--shadow-xl);
+}
+.shadowPink {
+  box-shadow: var(--shadow-pink);
+}
+.shadowYellow {
+  box-shadow: var(--shadow-yellow);
+}
+.shadowBlue {
+  box-shadow: var(--shadow-blue);
+}
+
+/* Interactive States */
 .cardInteractive {
   cursor: pointer;
 
@@ -27,39 +72,28 @@
   }
 }
 
-.shadowPink {
-  box-shadow: var(--shadow-pink);
-
-  &:hover {
-    box-shadow: 6px 6px 0px 0px var(--color-pink);
-  }
-}
-
-.shadowYellow {
-  box-shadow: var(--shadow-yellow);
-
-  &:hover {
-    box-shadow: 6px 6px 0px 0px var(--color-yellow);
-  }
-}
-
-.shadowBlue {
-  box-shadow: var(--shadow-blue);
-
-  &:hover {
-    box-shadow: 6px 6px 0px 0px var(--color-blue);
-  }
-}
-
-.bgCream {
-  background-color: var(--color-cream);
-}
-
+/* Backgrounds */
 .bgWhite {
   background-color: var(--color-white);
+  color: var(--color-ink);
 }
-
+.bgCream {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
 .bgDark {
   background-color: var(--color-ink);
+  color: var(--color-white);
+}
+.bgPink {
+  background-color: var(--color-pink);
+  color: var(--color-ink);
+}
+.bgYellow {
+  background-color: var(--color-yellow);
+  color: var(--color-ink);
+}
+.bgBlue {
+  background-color: var(--color-blue);
   color: var(--color-white);
 }

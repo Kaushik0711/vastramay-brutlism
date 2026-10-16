@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ToastProvider } from "@/components/ui/toast";
 
 export interface AppProvidersProps {
   children: React.ReactNode;
@@ -8,8 +9,8 @@ export interface AppProvidersProps {
 
 /**
  * Global Application Providers wrapper
- * Pre-configured for state management, carts, toasts, and UI context
+ * Integrates ToastProvider and future state management
  */
 export function AppProviders({ children }: AppProvidersProps) {
-  return <>{children}</>;
+  return <ToastProvider>{children}</ToastProvider>;
 }
