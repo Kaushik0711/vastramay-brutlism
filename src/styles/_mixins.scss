@@ -1,0 +1,82 @@
+/**
+ * Vastramay Neo-Brutalism SCSS Mixins
+ */
+
+/* Neo-Brutalist Box (Border + Hard Shadow) */
+@mixin neo-box($bg: var(--bg-surface), $shadow: var(--shadow-base), $border-width: var(--border-width-base), $border-color: var(--border-color-default), $radius: var(--radius-sm)) {
+  background-color: $bg;
+  border: $border-width solid $border-color;
+  box-shadow: $shadow;
+  border-radius: $radius;
+}
+
+/* Interactive Neo-Brutalist Element (Hover elevation, active push) */
+@mixin neo-interactive($shadow: var(--shadow-base), $hover-shadow: var(--shadow-md), $press-offset: var(--btn-press-offset)) {
+  box-shadow: $shadow;
+  transition: transform var(--duration-fast) var(--ease-neo),
+              box-shadow var(--duration-fast) var(--ease-neo),
+              background-color var(--duration-fast) var(--ease-neo);
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: $hover-shadow;
+  }
+
+  &:active {
+    transform: translate($press-offset, $press-offset);
+    box-shadow: 1px 1px 0px 0px var(--color-ink);
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* Accessible Focus Ring */
+@mixin neo-focus {
+  outline: none;
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+/* Custom Neo-Brutalist Scrollbar */
+@mixin neo-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-left: var(--border-width-hairline) solid var(--color-ink);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border: 2px solid var(--scrollbar-track);
+    border-radius: var(--radius-none);
+
+    &:hover {
+      background: var(--scrollbar-thumb-hover);
+    }
+  }
+}
+
+/* Modern Typography Legibility */
+@mixin text-balanced {
+  text-wrap: balance;
+}
+
+@mixin text-pretty {
+  text-wrap: pretty;
+}

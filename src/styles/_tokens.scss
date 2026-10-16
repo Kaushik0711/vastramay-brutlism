@@ -1,0 +1,165 @@
+/**
+ * Vastramay Neo-Brutalism Design Tokens
+ * Centralized CSS Custom Properties
+ */
+
+:root {
+  /* -------------------------------------------------------------------------
+   * Color Palette - Neo-Brutalism Core
+   * ------------------------------------------------------------------------- */
+  --color-cream: #F7F1E5;       /* Warm Cream: Base canvas */
+  --color-pink: #FF5C8A;        /* Hot Pink: Primary action & energy */
+  --color-yellow: #FFE14A;      /* Electric Yellow: High-voltage highlight */
+  --color-blue: #4867F5;        /* Cobalt Blue: Electric contrast & links */
+  --color-ink: #171717;         /* Ink Black: Deepest brutalist borders & text */
+  --color-white: #FFFFFF;       /* Crisp White: Card surfaces & high contrast */
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-600: #4B5563;
+  --color-gray-800: #1F2937;
+
+  /* Semantic Theme Mappings */
+  --bg-base: var(--color-cream);
+  --bg-surface: var(--color-white);
+  --bg-surface-elevated: var(--color-white);
+  --bg-inverted: var(--color-ink);
+
+  --fg-base: var(--color-ink);
+  --fg-muted: var(--color-gray-600);
+  --fg-inverted: var(--color-white);
+
+  --brand-primary: var(--color-pink);
+  --brand-secondary: var(--color-yellow);
+  --brand-accent: var(--color-blue);
+  --brand-dark: var(--color-ink);
+  --brand-light: var(--color-cream);
+
+  /* -------------------------------------------------------------------------
+   * Borders & Outlines
+   * ------------------------------------------------------------------------- */
+  --border-width-hairline: 1px;
+  --border-width-base: 2px;
+  --border-width-thick: 3px;
+  --border-width-heavy: 4px;
+  --border-color-default: var(--color-ink);
+
+  --border-hairline: var(--border-width-hairline) solid var(--border-color-default);
+  --border-base: var(--border-width-base) solid var(--border-color-default);
+  --border-thick: var(--border-width-thick) solid var(--border-color-default);
+  --border-heavy: var(--border-width-heavy) solid var(--border-color-default);
+
+  /* -------------------------------------------------------------------------
+   * Neo-Brutalist Hard Shadows (Crisp 0-blur offsets)
+   * ------------------------------------------------------------------------- */
+  --shadow-none: 0px 0px 0px 0px transparent;
+  --shadow-sm: 2px 2px 0px 0px var(--color-ink);
+  --shadow-base: 4px 4px 0px 0px var(--color-ink);
+  --shadow-md: 6px 6px 0px 0px var(--color-ink);
+  --shadow-lg: 8px 8px 0px 0px var(--color-ink);
+  --shadow-xl: 12px 12px 0px 0px var(--color-ink);
+
+  --shadow-pink: 4px 4px 0px 0px var(--color-pink);
+  --shadow-yellow: 4px 4px 0px 0px var(--color-yellow);
+  --shadow-blue: 4px 4px 0px 0px var(--color-blue);
+
+  /* -------------------------------------------------------------------------
+   * Border Radius
+   * ------------------------------------------------------------------------- */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-base: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* -------------------------------------------------------------------------
+   * Spacing System
+   * ------------------------------------------------------------------------- */
+  --space-0: 0px;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* -------------------------------------------------------------------------
+   * Typography Tokens
+   * (Font families are populated by Next.js font variables in layout.tsx)
+   * ------------------------------------------------------------------------- */
+  --font-display-fallback: 'Syne', 'Impact', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body-fallback: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-editorial-fallback: 'Playfair Display', Georgia, serif;
+
+  --font-family-display: var(--font-syne, var(--font-display-fallback));
+  --font-family-body: var(--font-plus-jakarta, var(--font-body-fallback));
+  --font-family-editorial: var(--font-playfair, var(--font-editorial-fallback));
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.05;
+  --line-height-snug: 1.25;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.625;
+
+  --letter-spacing-tighter: -0.04em;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-wider: 0.1em;
+
+  /* -------------------------------------------------------------------------
+   * Transitions & Motion
+   * ------------------------------------------------------------------------- */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 350ms;
+
+  --ease-neo: cubic-bezier(0.2, 0, 0, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --btn-press-offset: 2px;
+
+  /* -------------------------------------------------------------------------
+   * Z-Index Layers
+   * ------------------------------------------------------------------------- */
+  --z-base: 0;
+  --z-elevated: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-announcement: 250;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* -------------------------------------------------------------------------
+   * Focus Ring & Accessibility
+   * ------------------------------------------------------------------------- */
+  --focus-ring-width: 3px;
+  --focus-ring-color: var(--color-ink);
+  --focus-ring-offset: 2px;
+  --focus-ring-style: solid;
+  --focus-ring: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+
+  /* -------------------------------------------------------------------------
+   * Scrollbar Styles
+   * ------------------------------------------------------------------------- */
+  --scrollbar-width: 12px;
+  --scrollbar-track: var(--color-cream);
+  --scrollbar-thumb: var(--color-ink);
+  --scrollbar-thumb-hover: var(--color-pink);
+  --scrollbar-border: 2px solid var(--color-ink);
+}

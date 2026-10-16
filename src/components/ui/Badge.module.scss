@@ -1,0 +1,59 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-family: var(--font-family-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+  border: var(--border-width-base) solid var(--color-ink);
+  box-shadow: 2px 2px 0px 0px var(--color-ink);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.variantPink {
+  background-color: var(--color-pink);
+  color: var(--color-ink);
+}
+
+.variantYellow {
+  background-color: var(--color-yellow);
+  color: var(--color-ink);
+}
+
+.variantBlue {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.variantDark {
+  background-color: var(--color-ink);
+  color: var(--color-white);
+}
+
+.variantWhite {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+.variantCream {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
+
+.shapeSquare {
+  border-radius: var(--radius-none);
+}
+
+.shapeRounded {
+  border-radius: var(--radius-sm);
+}
+
+.shapePill {
+  border-radius: var(--radius-full);
+}

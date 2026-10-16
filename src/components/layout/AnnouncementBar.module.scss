@@ -1,0 +1,46 @@
+.bar {
+  background-color: var(--color-yellow);
+  color: var(--color-ink);
+  border-bottom: var(--border-width-base) solid var(--color-ink);
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-family-display);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  user-select: none;
+  z-index: var(--z-announcement);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+.separator {
+  display: inline-block;
+  margin-left: 1.5rem;
+  opacity: 0.6;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,70 @@
+@use 'tokens';
+@use 'mixins' as *;
+@use 'reset';
+
+/**
+ * Vastramay Neo-Brutalism Global Utility Classes
+ */
+
+.neo-box {
+  @include neo-box;
+}
+
+.neo-box-thick {
+  @include neo-box(
+    $bg: var(--bg-surface),
+    $shadow: var(--shadow-md),
+    $border-width: var(--border-width-thick)
+  );
+}
+
+.neo-box-pink {
+  @include neo-box(
+    $bg: var(--color-pink),
+    $shadow: var(--shadow-base),
+    $border-width: var(--border-width-base)
+  );
+  color: var(--color-ink);
+}
+
+.neo-box-yellow {
+  @include neo-box(
+    $bg: var(--color-yellow),
+    $shadow: var(--shadow-base),
+    $border-width: var(--border-width-base)
+  );
+  color: var(--color-ink);
+}
+
+.neo-box-blue {
+  @include neo-box(
+    $bg: var(--color-blue),
+    $shadow: var(--shadow-base),
+    $border-width: var(--border-width-base)
+  );
+  color: var(--color-white);
+}
+
+.neo-interactive {
+  @include neo-interactive;
+}
+
+.font-display {
+  font-family: var(--font-family-display);
+}
+
+.font-body {
+  font-family: var(--font-family-body);
+}
+
+.font-editorial {
+  font-family: var(--font-family-editorial);
+}
+
+.text-balance {
+  @include text-balanced;
+}
+
+.text-pretty {
+  @include text-pretty;
+}

@@ -1,0 +1,103 @@
+import type { Product } from "@/types";
+
+export const sampleProducts: Product[] = [
+  {
+    id: "prod-1",
+    title: "Cobalt Asymmetric Mandarin Kurta",
+    slug: "cobalt-asymmetric-mandarin-kurta",
+    tagline: "Heavy Slub Cotton with High-Voltage Contrast Trims",
+    description:
+      "Engineered with a high-standing Mandarin collar, deep angular chest placket, and concealed metal snaps. Tailored from 100% long-staple Indian slub cotton.",
+    price: 2499,
+    originalPrice: 3999,
+    currency: "INR",
+    gender: "men",
+    category: "kurtas",
+    tags: ["neo-heritage", "festive", "cotton"],
+    isNewArrival: true,
+    isFeatured: true,
+    discountPercentage: 38,
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
+        alt: "Model wearing Cobalt Asymmetric Mandarin Kurta",
+        isPrimary: true,
+      },
+    ],
+    variants: [
+      { id: "v1-1", sku: "CK-BLU-S", colorName: "Cobalt Blue", colorHex: "#4867F5", size: "S", stock: 12, inStock: true },
+      { id: "v1-2", sku: "CK-BLU-M", colorName: "Cobalt Blue", colorHex: "#4867F5", size: "M", stock: 20, inStock: true },
+      { id: "v1-3", sku: "CK-BLU-L", colorName: "Cobalt Blue", colorHex: "#4867F5", size: "L", stock: 15, inStock: true },
+      { id: "v1-4", sku: "CK-BLU-XL", colorName: "Cobalt Blue", colorHex: "#4867F5", size: "XL", stock: 8, inStock: true },
+    ],
+    fabric: "100% Long-Staple Slub Cotton",
+    careInstructions: ["Machine wash cold on gentle cycle", "Line dry in shade", "Warm iron on reverse"],
+    rating: 4.8,
+    reviewsCount: 42,
+  },
+  {
+    id: "prod-2",
+    title: "Electric Yellow Textured Nehru Jacket",
+    slug: "electric-yellow-textured-nehru-jacket",
+    tagline: "Architectural Cut in Structured Jacquard",
+    description:
+      "A statement layer designed with hard-edged welt pockets and custom matte-black brutalist buttons. Lined with lightweight breathable satin.",
+    price: 3899,
+    originalPrice: 5499,
+    currency: "INR",
+    gender: "men",
+    category: "nehru-jackets",
+    tags: ["statement", "jacquard", "festive"],
+    isBestSeller: true,
+    isFeatured: true,
+    discountPercentage: 29,
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80",
+        alt: "Electric Yellow Textured Nehru Jacket on model",
+        isPrimary: true,
+      },
+    ],
+    variants: [
+      { id: "v2-1", sku: "NJ-YEL-M", colorName: "Electric Yellow", colorHex: "#FFE14A", size: "M", stock: 9, inStock: true },
+      { id: "v2-2", sku: "NJ-YEL-L", colorName: "Electric Yellow", colorHex: "#FFE14A", size: "L", stock: 14, inStock: true },
+    ],
+    fabric: "Woven Silk-Cotton Blend Jacquard",
+    careInstructions: ["Dry clean only"],
+    rating: 4.9,
+    reviewsCount: 38,
+  },
+  {
+    id: "prod-3",
+    title: "Hot Pink Flared Angrakha Tunic",
+    slug: "hot-pink-flared-angrakha-tunic",
+    tagline: "Cross-Over Tie Details with Edge Stitching",
+    description:
+      "Reinterpreting classic Angrakha crossover architecture with modern drop shoulders, asymmetric hemline, and high-contrast ink-black tie ribbons.",
+    price: 3299,
+    originalPrice: 4799,
+    currency: "INR",
+    gender: "women",
+    category: "dresses",
+    tags: ["angrakha", "hot-pink", "artisan"],
+    isNewArrival: true,
+    isFeatured: true,
+    discountPercentage: 31,
+    images: [
+      {
+        src: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
+        alt: "Hot Pink Flared Angrakha Tunic",
+        isPrimary: true,
+      },
+    ],
+    variants: [
+      { id: "v3-1", sku: "AT-PNK-S", colorName: "Hot Pink", colorHex: "#FF5C8A", size: "S", stock: 8, inStock: true },
+      { id: "v3-2", sku: "AT-PNK-M", colorName: "Hot Pink", colorHex: "#FF5C8A", size: "M", stock: 11, inStock: true },
+      { id: "v3-3", sku: "AT-PNK-L", colorName: "Hot Pink", colorHex: "#FF5C8A", size: "L", stock: 6, inStock: true },
+    ],
+    fabric: "Pure Chanderi Silk Cotton",
+    careInstructions: ["Gentle hand wash", "Do not wring", "Dry in shade"],
+    rating: 4.7,
+    reviewsCount: 29,
+  },
+];
