@@ -32,7 +32,7 @@ export function CategoryNav({ activeSlug, className }: CategoryNavProps) {
           return (
             <Link
               key={cat.id}
-              href={`/shop/${cat.slug}`}
+              href={`/category/${cat.slug}`}
               className={cn(
                 "flex items-center gap-2 px-4 py-2 border-2 border-brand-ink font-display text-xs sm:text-sm font-bold uppercase transition-all shadow-neo-sm",
                 isActive

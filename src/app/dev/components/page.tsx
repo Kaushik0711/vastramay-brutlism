@@ -64,7 +64,14 @@ import {
   Sliders,
   HelpCircle,
   ExternalLink,
+  Palette,
+  SlidersHorizontal,
+  RotateCcw,
+  Zap,
+  Layers,
 } from "lucide-react";
+import { useCustomization } from "@/context/CustomizationContext";
+import { cn } from "@/lib/utils";
 
 export default function ComponentShowcasePage() {
   // Modal & Drawer State
@@ -86,6 +93,18 @@ export default function ComponentShowcasePage() {
 
   // Interactive page number
   const [currentPage, setCurrentPage] = useState(2);
+
+  // Runtime Customization Hook (Phase 5)
+  const {
+    theme,
+    updateColor,
+    updateGeometry,
+    updateMotion,
+    resetTheme,
+    isModified,
+    prefersReducedMotion,
+    cssVariables,
+  } = useCustomization();
 
   // Sample Product
   const demoProduct = sampleProducts[0];
@@ -128,6 +147,341 @@ export default function ComponentShowcasePage() {
 
       <div className="py-12">
         <Container className="space-y-16">
+          {/* SECTION 0: THEME & MOTION STUDIO (PHASE 5) */}
+          <section className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-brand-ink pb-4">
+              <div className="flex items-center gap-3">
+                <Badge variant="yellow">00</Badge>
+                <div>
+                  <h2 className="font-display font-extrabold text-2xl uppercase text-brand-ink flex items-center gap-2">
+                    <SlidersHorizontal className="w-6 h-6 stroke-[2.5] text-brand-pink" />
+                    THEME & MOTION CUSTOMIZATION STUDIO
+                  </h2>
+                  <p className="font-body text-xs sm:text-sm text-neutral-600 mt-0.5">
+                    Live runtime control panel for brand colors, border widths, shadow offsets, corner radii, and animation presets.
+                  </p>
+                </div>
+              </div>
+
+              {isModified && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetTheme}
+                  leadingIcon={<RotateCcw className="w-3.5 h-3.5" />}
+                  className="bg-brand-white shrink-0"
+                >
+                  RESET DEFAULTS
+                </Button>
+              )}
+            </div>
+
+            {/* Customizer Control Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Color Customization */}
+              <Card className="p-5 bg-brand-white space-y-4">
+                <div className="flex items-center gap-2 font-display font-bold text-sm uppercase text-brand-ink border-b border-brand-ink/20 pb-2">
+                  <Palette className="w-4 h-4 text-brand-pink" />
+                  <span>Palette & Contrast</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Primary Accent ({theme.colors.brandPrimary}):
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[
+                        { label: "Pink", hex: "#FF5C8A" },
+                        { label: "Yellow", hex: "#FFE14A" },
+                        { label: "Blue", hex: "#4867F5" },
+                        { label: "Emerald", hex: "#10B981" },
+                        { label: "Purple", hex: "#8B5CF6" },
+                      ].map((c) => (
+                        <button
+                          key={c.hex}
+                          type="button"
+                          onClick={() => updateColor("brandPrimary", c.hex)}
+                          style={{ backgroundColor: c.hex }}
+                          className={cn(
+                            "w-8 h-8 rounded-[2px] border-2 border-brand-ink transition-transform cursor-pointer",
+                            theme.colors.brandPrimary === c.hex ? "scale-110 shadow-neo-sm ring-2 ring-brand-ink" : "hover:scale-105"
+                          )}
+                          title={c.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Canvas Background:
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[
+                        { label: "Cream", hex: "#F7F1E5" },
+                        { label: "White", hex: "#FFFFFF" },
+                        { label: "Gray", hex: "#F3F4F6" },
+                      ].map((c) => (
+                        <button
+                          key={c.hex}
+                          type="button"
+                          onClick={() => updateColor("bgBase", c.hex)}
+                          style={{ backgroundColor: c.hex }}
+                          className={cn(
+                            "px-2.5 py-1 text-xs font-mono font-bold border-2 border-brand-ink transition-all cursor-pointer",
+                            theme.colors.bgBase === c.hex ? "bg-brand-ink text-brand-white shadow-neo-sm" : "hover:bg-brand-cream"
+                          )}
+                        >
+                          {c.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Geometry Customization */}
+              <Card className="p-5 bg-brand-white space-y-4">
+                <div className="flex items-center gap-2 font-display font-bold text-sm uppercase text-brand-ink border-b border-brand-ink/20 pb-2">
+                  <Layers className="w-4 h-4 text-brand-yellow" />
+                  <span>Geometry & Shadows</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Border Thickness: {theme.geometry.borderWidth}px
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[1, 2, 3, 4].map((bw) => (
+                        <button
+                          key={bw}
+                          type="button"
+                          onClick={() => updateGeometry("borderWidth", bw)}
+                          className={cn(
+                            "flex-1 py-1 text-xs font-mono font-bold border-2 border-brand-ink transition-all cursor-pointer text-center",
+                            theme.geometry.borderWidth === bw
+                              ? "bg-brand-yellow text-brand-ink shadow-neo-sm font-extrabold"
+                              : "bg-brand-white hover:bg-neutral-100"
+                          )}
+                        >
+                          {bw}px
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Hard Shadow Offset: {theme.geometry.shadowOffset}px
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[0, 2, 4, 6, 8].map((so) => (
+                        <button
+                          key={so}
+                          type="button"
+                          onClick={() => updateGeometry("shadowOffset", so)}
+                          className={cn(
+                            "flex-1 py-1 text-xs font-mono font-bold border-2 border-brand-ink transition-all cursor-pointer text-center",
+                            theme.geometry.shadowOffset === so
+                              ? "bg-brand-pink text-brand-ink shadow-neo-sm font-extrabold"
+                              : "bg-brand-white hover:bg-neutral-100"
+                          )}
+                        >
+                          {so}px
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Corner Radius: {theme.geometry.radius}px
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[
+                        { label: "0px (Sharp)", val: 0 },
+                        { label: "2px (Neo)", val: 2 },
+                        { label: "6px (Soft)", val: 6 },
+                      ].map((r) => (
+                        <button
+                          key={r.val}
+                          type="button"
+                          onClick={() => updateGeometry("radius", r.val)}
+                          className={cn(
+                            "flex-1 py-1 text-xs font-mono font-bold border-2 border-brand-ink transition-all cursor-pointer text-center",
+                            theme.geometry.radius === r.val
+                              ? "bg-brand-blue text-brand-white shadow-neo-sm"
+                              : "bg-brand-white hover:bg-neutral-100"
+                          )}
+                        >
+                          {r.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Motion & Interaction Physics */}
+              <Card className="p-5 bg-brand-white space-y-4">
+                <div className="flex items-center gap-2 font-display font-bold text-sm uppercase text-brand-ink border-b border-brand-ink/20 pb-2">
+                  <Zap className="w-4 h-4 text-brand-blue" />
+                  <span>Motion & Accessibility</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Animation Speed: {theme.motion.durationBaseMs}ms
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {[
+                        { label: "Fast (120ms)", ms: 120 },
+                        { label: "Standard (200ms)", ms: 200 },
+                        { label: "Relaxed (350ms)", ms: 350 },
+                      ].map((m) => (
+                        <button
+                          key={m.ms}
+                          type="button"
+                          onClick={() => updateMotion("durationBaseMs", m.ms)}
+                          className={cn(
+                            "flex-1 py-1 text-xs font-mono font-bold border-2 border-brand-ink transition-all cursor-pointer text-center",
+                            theme.motion.durationBaseMs === m.ms
+                              ? "bg-brand-yellow text-brand-ink shadow-neo-sm"
+                              : "bg-brand-white hover:bg-neutral-100"
+                          )}
+                        >
+                          {m.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <label className="flex items-center justify-between cursor-pointer p-2 bg-brand-cream border border-brand-ink">
+                      <div>
+                        <span className="font-display font-bold text-xs uppercase text-brand-ink block">
+                          Reduced Motion Override
+                        </span>
+                        <span className="font-mono text-[10px] text-neutral-600">
+                          {prefersReducedMotion ? "Spatial translates disabled" : "Full mechanical spring physics"}
+                        </span>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={theme.motion.reducedMotion}
+                        onChange={(e) => updateMotion("reducedMotion", e.target.checked)}
+                        className="w-4 h-4 accent-brand-pink"
+                      />
+                    </label>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono text-neutral-600 font-bold block mb-1.5">
+                      Page Transition Style:
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {(["slide", "fade", "none"] as const).map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => updateMotion("pageTransitionStyle", s)}
+                          className={cn(
+                            "flex-1 py-1 text-xs font-mono font-bold uppercase border-2 border-brand-ink transition-all cursor-pointer text-center",
+                            theme.motion.pageTransitionStyle === s
+                              ? "bg-brand-pink text-brand-ink shadow-neo-sm"
+                              : "bg-brand-white hover:bg-neutral-100"
+                          )}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Live Interactive Sandbox with Active Custom CSS Variables */}
+            <div
+              style={cssVariables as React.CSSProperties}
+              className="p-6 sm:p-8 bg-[var(--bg-base)] border-3 border-[var(--border-color-default)] shadow-[var(--shadow-base)] rounded-[var(--radius-sm)] transition-all space-y-6"
+            >
+              <div className="flex items-center justify-between border-b-2 border-brand-ink pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 bg-brand-pink rounded-full border border-brand-ink" />
+                  <span className="font-display font-extrabold text-sm uppercase tracking-wide text-brand-ink">
+                    LIVE THEME & MOTION SANDBOX PREVIEW
+                  </span>
+                </div>
+                <Badge variant="dark" shape="square" className="text-[10px] font-mono">
+                  ISOLATED DEV CONTEXT
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-4 bg-[var(--bg-surface)] border-[var(--border-width-base)] border-[var(--border-color-default)] shadow-[var(--shadow-base)] rounded-[var(--radius-sm)] space-y-3">
+                  <span className="font-display font-bold text-xs uppercase text-neutral-500">
+                    Interactive Buttons
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="sm" className="w-full justify-center">
+                      PRIMARY ACTION
+                    </Button>
+                    <Button variant="secondary" size="sm" className="w-full justify-center">
+                      SECONDARY ACCENT
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[var(--bg-surface)] border-[var(--border-width-base)] border-[var(--border-color-default)] shadow-[var(--shadow-base)] rounded-[var(--radius-sm)] space-y-3">
+                  <span className="font-display font-bold text-xs uppercase text-neutral-500">
+                    Badges & Indicators
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="pink">NEW DROP</Badge>
+                    <Badge variant="yellow">BESTSELLER</Badge>
+                    <Badge variant="blue">HANDLOOM</Badge>
+                    <Badge variant="dark">LIMITED</Badge>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[var(--bg-surface)] border-[var(--border-width-base)] border-[var(--border-color-default)] shadow-[var(--shadow-base)] rounded-[var(--radius-sm)] space-y-3">
+                  <span className="font-display font-bold text-xs uppercase text-neutral-500">
+                    Form Control
+                  </span>
+                  <Input placeholder="Type to test active shadow..." className="text-xs" />
+                </div>
+
+                <div className="p-4 bg-[var(--bg-surface)] border-[var(--border-width-base)] border-[var(--border-color-default)] shadow-[var(--shadow-base)] rounded-[var(--radius-sm)] space-y-3">
+                  <span className="font-display font-bold text-xs uppercase text-neutral-500">
+                    Dialog & Drawer Triggers
+                  </span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setModalOpen(true)}
+                      className="flex-1 justify-center text-xs"
+                    >
+                      MODAL
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setDrawerOpen(true)}
+                      className="flex-1 justify-center text-xs"
+                    >
+                      DRAWER
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* SECTION 1: BUTTONS & ICONS */}
           <section className="space-y-6">
             <div className="flex items-center gap-3 border-b-2 border-brand-ink pb-3">

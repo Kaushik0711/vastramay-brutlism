@@ -4,6 +4,7 @@ import React, { useState, useRef, useId } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { UI_CONFIG } from "@/config/ui";
+import { tooltipVariants } from "@/lib/motion";
 
 export type TooltipSide = "top" | "bottom" | "left" | "right";
 
@@ -67,10 +68,10 @@ export function Tooltip({
           <motion.div
             id={tooltipId}
             role="tooltip"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.12 }}
+            variants={tooltipVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className={cn(
               "absolute z-[var(--z-tooltip)] px-2.5 py-1 font-display font-bold text-[11px] uppercase tracking-wider text-brand-ink bg-brand-yellow border-2 border-brand-ink shadow-neo-sm whitespace-nowrap pointer-events-none rounded-[2px]",
               sideClasses[side],

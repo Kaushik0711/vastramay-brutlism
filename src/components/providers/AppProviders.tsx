@@ -2,6 +2,8 @@
 
 import React from "react";
 import { ToastProvider } from "@/components/ui/toast";
+import { ShoppingProvider } from "@/context/ShoppingContext";
+import { CustomizationProvider } from "@/context/CustomizationContext";
 
 export interface AppProvidersProps {
   children: React.ReactNode;
@@ -9,8 +11,14 @@ export interface AppProvidersProps {
 
 /**
  * Global Application Providers wrapper
- * Integrates ToastProvider and future state management
+ * Integrates CustomizationProvider, ToastProvider, and centralized ShoppingProvider
  */
 export function AppProviders({ children }: AppProvidersProps) {
-  return <ToastProvider>{children}</ToastProvider>;
+  return (
+    <CustomizationProvider>
+      <ToastProvider>
+        <ShoppingProvider>{children}</ShoppingProvider>
+      </ToastProvider>
+    </CustomizationProvider>
+  );
 }

@@ -10,14 +10,16 @@ This document details the exact technologies, package versions, and architectura
 | :--- | :--- | :--- |
 | **Next.js** | `16.4.2` | App Router framework with Turbopack and Partial Prerendering |
 | **React** / **React DOM** | `19.3.0` | React 19 core library |
-| **TypeScript** | `^5.x` | Strict type safety across all components and models |
-| **Tailwind CSS** | `^4.x` | Utility-first CSS framework with native `@theme` integration |
-| **Sass** | `^1.97.3` | SCSS and SCSS Modules compiler for complex brutalist micro-interactions |
-| **Motion** | `^12.38.0` | Production animation library for future spring/layout animations |
-| **Lucide React** | `^1.16.0` | Crisp geometric iconography matching neo-brutalist weight |
-| **React Hook Form** | `^7.71.2` | Lightweight, performant form management for checkout and filters |
+| **TypeScript** | `^5` | Strict type safety across all components and models |
+| **Tailwind CSS** | `^4` | Utility-first CSS framework with native `@theme` integration |
+| **@tailwindcss/turbopack** | `^4` | Next.js Turbopack loader for Tailwind v4 CSS |
+| **Sass** | `^1.105.2` | SCSS compiler for complex neo-brutalist tactile physics and keyframe animations |
+| **Motion** | `^14.3.0` | Production animation library for spring presets, overlays, and page transitions |
+| **Lucide React** | `^1.57.0` | Crisp geometric iconography matching neo-brutalist aesthetic |
+| **React Hook Form** | `^7.90.0` | Lightweight form state management for checkout and newsletter |
+| **@hookform/resolvers** | `^5.9.1` | Zod resolver adapter for React Hook Form |
 | **Zod** | `^4.6.7` | Type-safe schema validation |
-| **clsx** + **tailwind-merge** | `^2.1.1` / `^3.5.0` | Conflict-free className composition (`cn` helper) |
+| **clsx** + **tailwind-merge** | `^2.1.1` / `^3.7.0` | Conflict-free className composition (`cn` helper) |
 
 ---
 

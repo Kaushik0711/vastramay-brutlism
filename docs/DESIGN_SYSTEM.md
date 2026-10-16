@@ -89,3 +89,23 @@ Available in `src/styles/_mixins.scss`:
 - `@include neo-scrollbar`
 - `@include text-balanced`
 - `@include text-pretty`
+
+---
+
+## 7. Runtime Theme Customization (Phase 5)
+
+The system supports controlled runtime UI customization via `src/config/ui.ts` and `CustomizationContext.tsx`:
+
+### Customizable Dimensions:
+1. **Colors**: Canvas background (`--bg-base`), foreground (`--fg-base`), primary accent (`--brand-primary`), secondary accent (`--brand-secondary`), blue accent (`--brand-accent`), surface (`--bg-surface`), border & shadow color (`--border-color-default`).
+2. **Geometry**:
+   - Border thickness: `1px`, `2px`, `3px`, `4px`.
+   - Shadow offset: `0px` (flat), `2px`, `4px`, `6px`, `8px`.
+   - Corner radius: `0px` (sharp), `2px` (subtle neo), `6px` (soft).
+3. **Motion Physics**:
+   - Duration presets: `120ms` (fast), `200ms` (standard), `350ms` (relaxed).
+   - Reduced-motion manual override: disables spatial transforms across both CSS and Motion layers.
+   - Page transition styles: `slide`, `fade`, `none`.
+
+### Developer Customizer Studio:
+Located at `/dev/components` (Section 00). Allows engineers and designers to preview token combinations in real-time within an isolated sandbox without polluting customer sessions or altering production defaults.

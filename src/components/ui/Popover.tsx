@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
-import { dropdownVariants } from "@/lib/motion";
+import { popoverVariants } from "@/lib/motion";
 
 export type PopoverAlign = "start" | "center" | "end";
 export type PopoverSide = "top" | "bottom" | "left" | "right";
@@ -76,7 +76,7 @@ export function Popover({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            variants={dropdownVariants}
+            variants={popoverVariants}
             initial="hidden"
             animate="visible"
             exit="exit"

@@ -1,0 +1,196 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-cream, #F7F1E5);
+  padding: 1.5rem;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.exiting {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  background-color: var(--color-white, #FFFFFF);
+  border: 3px solid var(--color-ink, #171717);
+  box-shadow: 8px 8px 0px var(--color-ink, #171717);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-col: column;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 2.5rem 2.25rem;
+    gap: 1.75rem;
+  }
+}
+
+.brandRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wordmark {
+  font-family: var(--font-family-display, sans-serif);
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--color-ink, #171717);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .wordmark {
+    font-size: 2.25rem;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  background-color: var(--color-yellow, #FFE14A);
+  color: var(--color-ink, #171717);
+  border: 2px solid var(--color-ink, #171717);
+  box-shadow: 2px 2px 0px var(--color-ink, #171717);
+  font-family: var(--font-family-display, sans-serif);
+  font-weight: 800;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Textile / Fabric Stitching Visual */
+.visualContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.75rem 0;
+}
+
+.swatch {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid var(--color-ink, #171717);
+  box-shadow: 3px 3px 0px var(--color-ink, #171717);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  animation: swatchPulse 1.8s ease-in-out infinite;
+}
+
+.swatchPink {
+  background-color: var(--color-pink, #FF5C8A);
+  animation-delay: 0s;
+}
+
+.swatchYellow {
+  background-color: var(--color-yellow, #FFE14A);
+  animation-delay: 0.25s;
+}
+
+.swatchBlue {
+  background-color: var(--color-blue, #4867F5);
+  animation-delay: 0.5s;
+}
+
+.stitchDot {
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: var(--color-ink, #171717);
+}
+
+@keyframes swatchPulse {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Progress Track */
+.progressTrack {
+  width: 100%;
+  height: 0.875rem;
+  background-color: var(--color-cream, #F7F1E5);
+  border: 2px solid var(--color-ink, #171717);
+  box-shadow: 3px 3px 0px var(--color-ink, #171717);
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-yellow, #FFE14A) 0%,
+    var(--color-pink, #FF5C8A) 100%
+  );
+  border-right: 2px solid var(--color-ink, #171717);
+  animation: loadProgress 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: left;
+}
+
+@keyframes loadProgress {
+  0% {
+    width: 0%;
+  }
+  60% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.statusText {
+  font-family: var(--font-family-body, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #525252;
+  margin: 0;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition: none !important;
+  }
+  .swatch {
+    animation: none !important;
+    transform: none !important;
+  }
+  .progressBar {
+    animation: none !important;
+    width: 100% !important;
+  }
+}

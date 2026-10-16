@@ -2,6 +2,8 @@
 
 import React, { useState, useId } from "react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "motion/react";
+import { tabPanelVariants } from "@/lib/motion";
 
 export interface TabItem {
   id: string;
@@ -112,17 +114,24 @@ export function Tabs({
       </div>
 
       {/* Tab Panel */}
-      {currentTabItem && (
-        <div
-          role="tabpanel"
-          id={`${baseId}-panel-${currentTabItem.id}`}
-          aria-labelledby={`${baseId}-tab-${currentTabItem.id}`}
-          tabIndex={0}
-          className="p-5 bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] font-body text-sm outline-none focus-visible:outline-2"
-        >
-          {currentTabItem.content}
-        </div>
-      )}
+      <AnimatePresence mode="wait">
+        {currentTabItem && (
+          <motion.div
+            key={currentTabItem.id}
+            variants={tabPanelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            role="tabpanel"
+            id={`${baseId}-panel-${currentTabItem.id}`}
+            aria-labelledby={`${baseId}-tab-${currentTabItem.id}`}
+            tabIndex={0}
+            className="p-5 bg-brand-white border-2 border-brand-ink shadow-neo rounded-[2px] font-body text-sm outline-none focus-visible:outline-2"
+          >
+            {currentTabItem.content}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

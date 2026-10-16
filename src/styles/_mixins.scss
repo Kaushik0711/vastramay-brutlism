@@ -27,6 +27,14 @@
     box-shadow: 1px 1px 0px 0px var(--color-ink);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    transition: background-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+    &:hover,
+    &:active {
+      transform: none;
+    }
+  }
+
   &:disabled,
   &[aria-disabled="true"] {
     opacity: 0.6;

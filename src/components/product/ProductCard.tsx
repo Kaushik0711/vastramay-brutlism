@@ -10,6 +10,8 @@ import { PriceTag } from "./PriceTag";
 import { Button } from "@/components/ui/Button";
 import { Eye, Heart, ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
+import { useShopping } from "@/context/ShoppingContext";
 
 export interface ProductCardProps {
   product: Product;
@@ -23,13 +25,18 @@ export interface ProductCardProps {
 export function ProductCard({
   product,
   priority = false,
-  isWishlisted = false,
+  isWishlisted: propWishlisted,
   onWishlistToggle,
   onQuickView,
   className,
 }: ProductCardProps) {
   const [imgError, setImgError] = useState(false);
-  const [internalWishlisted, setInternalWishlisted] = useState(isWishlisted);
+  const { isInWishlist, toggleWishlist, openQuickView, isHydrated } = useShopping();
+
+  // Use centralized wishlist state when available, with prop fallback
+  const isItemWishlisted = isHydrated
+    ? isInWishlist(product.id)
+    : propWishlisted ?? false;
 
   const primaryImage = product.images?.[0] || {
     src: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
@@ -39,14 +46,18 @@ export function ProductCard({
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setInternalWishlisted((prev) => !prev);
+    toggleWishlist(product.id);
     onWishlistToggle?.(product.id);
   };
 
   const handleQuickView = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onQuickView?.(product);
+    if (onQuickView) {
+      onQuickView(product);
+    } else {
+      openQuickView(product);
+    }
   };
 
   const isOutOfStock = product.variants && product.variants.every((v) => !v.inStock || v.stock === 0);
@@ -98,36 +109,37 @@ export function ProductCard({
         </div>
 
         {/* Wishlist Button */}
-        <button
+        <motion.button
           type="button"
           onClick={handleWishlist}
-          aria-label={internalWishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
+          whileTap={{ scale: 0.85 }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.12 }}
+          aria-label={isItemWishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
           className={cn(
-            "absolute top-3 right-3 z-10 p-2 border-2 border-brand-ink shadow-neo-sm transition-all duration-150 cursor-pointer",
-            internalWishlisted
+            "absolute top-3 right-3 z-10 p-2 border-2 border-brand-ink shadow-neo-sm transition-colors duration-150 cursor-pointer rounded-[2px]",
+            isItemWishlisted
               ? "bg-brand-pink text-brand-ink"
               : "bg-brand-white text-brand-ink hover:bg-brand-yellow"
           )}
         >
           <Heart
-            className={cn("w-4 h-4 stroke-[2.2]", internalWishlisted && "fill-brand-ink")}
+            className={cn("w-4 h-4 stroke-[2.2] transition-transform duration-150", isItemWishlisted && "fill-brand-ink scale-110")}
           />
-        </button>
+        </motion.button>
 
         {/* Quick View Button on Hover */}
-        {onQuickView && (
-          <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleQuickView}
-              className="w-full justify-center bg-brand-white/95 backdrop-blur-sm"
-              leadingIcon={<Eye className="w-4 h-4" />}
-            >
-              QUICK VIEW
-            </Button>
-          </div>
-        )}
+        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleQuickView}
+            className="w-full justify-center bg-brand-white/95 backdrop-blur-sm"
+            leadingIcon={<Eye className="w-4 h-4" />}
+          >
+            QUICK VIEW
+          </Button>
+        </div>
       </div>
 
       {/* Product Details */}

@@ -17,6 +17,10 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-base);
   color: var(--fg-base);
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
 
 body {

@@ -1,13 +1,28 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { toast } from "@/components/ui/toast";
 import { ShieldCheck, RefreshCw, Truck, Sparkles } from "lucide-react";
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    toast.success("Welcome to the Drop List!", {
+      description: "Demo note: Frontend preview subscription recorded.",
+    });
+    setEmail("");
+  };
+
   return (
     <footer className="w-full bg-brand-ink text-brand-white border-t-3 sm:border-t-4 border-brand-ink">
       {/* Brand Value Props Strip */}
@@ -62,17 +77,19 @@ export function Footer() {
                 {siteConfig.description}
               </p>
 
-              {/* Newsletter Form Shell */}
+              {/* Newsletter Form */}
               <div className="pt-2">
                 <p className="font-display font-bold text-xs uppercase text-brand-yellow tracking-wider mb-2">
                   JOIN THE INSIDER DROP LIST
                 </p>
                 <form
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={handleNewsletterSubmit}
                   className="flex flex-col sm:flex-row gap-2 max-w-md"
                 >
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
                     aria-label="Email address for newsletter"
                     className="flex-1 px-3 py-2 bg-neutral-900 border-2 border-neutral-700 text-brand-white text-sm placeholder:text-neutral-500 focus:border-brand-yellow focus:outline-none"
@@ -81,25 +98,48 @@ export function Footer() {
                     SUBSCRIBE
                   </Button>
                 </form>
+                <p className="font-mono text-[10px] text-neutral-500 mt-1">
+                  *Demo preview: No real marketing email is sent.
+                </p>
               </div>
             </div>
 
             {/* Shop Links */}
             <div>
               <h4 className="font-display font-extrabold text-xs uppercase tracking-wider text-brand-yellow mb-4 border-b border-neutral-800 pb-1">
-                SHOP
+                SHOP EDITS
               </h4>
               <ul className="space-y-2 text-sm">
-                {siteConfig.footerNav.shop.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-neutral-400 hover:text-brand-pink transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/shop" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    All Garments
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/men" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Men&apos;s Collection
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/women" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Women&apos;s Collection
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/category/kurtas" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Kurtas & Bundis
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/category/nehru-jackets" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Nehru Jackets
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/category/dresses" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Robes & Dresses
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -109,45 +149,55 @@ export function Footer() {
                 CUSTOMER CARE
               </h4>
               <ul className="space-y-2 text-sm">
-                {siteConfig.footerNav.customerService.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-neutral-400 hover:text-brand-pink transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/shipping-returns" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Shipping & Returns
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faq" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    FAQ & Sizing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/wishlist" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Your Wishlist
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cart" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Shopping Bag
+                  </Link>
+                </li>
               </ul>
             </div>
 
             {/* About & Legal */}
             <div>
               <h4 className="font-display font-extrabold text-xs uppercase tracking-wider text-brand-yellow mb-4 border-b border-neutral-800 pb-1">
-                ABOUT & LEGAL
+                BRAND & LEGAL
               </h4>
               <ul className="space-y-2 text-sm">
-                {siteConfig.footerNav.about.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-neutral-400 hover:text-brand-pink transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-                {siteConfig.footerNav.legal.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-neutral-400 hover:text-brand-pink transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/about" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    About Vastramay
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy-policy" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="text-neutral-400 hover:text-brand-pink transition-colors">
+                    Terms of Service
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -158,7 +208,7 @@ export function Footer() {
             <p className="flex items-center gap-2">
               <span>DESIGNED WITH</span>
               <span className="text-brand-pink">♥</span>
-              <span>NEO-BRUTALISM ARCHITECTURE</span>
+              <span>NEO-BRUTALIST ARCHITECTURE</span>
             </p>
           </div>
         </Container>

@@ -10,14 +10,19 @@ export type ClothingCategory =
   | "kurtas"
   | "sherwanis"
   | "nehru-jackets"
-  | "dresses"
-  | "sarees"
-  | "lehengas"
   | "shirts"
+  | "t-shirts"
   | "trousers"
+  | "jeans"
+  | "hoodies"
+  | "dresses"
+  | "tops"
+  | "skirts"
+  | "co-ord-sets"
+  | "sarees"
   | "accessories";
 
-export type ProductSize = "XS" | "S" | "M" | "L" | "XL" | "XXL";
+export type ProductSize = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "FREE" | string;
 
 export interface ProductVariant {
   id: string;
@@ -40,6 +45,7 @@ export interface Product {
   currency: CurrencyCode;
   gender: ClothingGender;
   category: ClothingCategory;
+  collection?: string;
   tags: string[];
   isNewArrival?: boolean;
   isBestSeller?: boolean;
@@ -65,6 +71,7 @@ export interface CategoryItem {
   description: string;
   itemCount: number;
   badge?: string;
+  imageSrc?: string;
 }
 
 export interface NavItem {
@@ -88,21 +95,55 @@ export interface SiteConfig {
     customerService: NavItem[];
     legal: NavItem[];
   };
-  socialLinks: {
-    instagram: string;
-    twitter: string;
-    facebook: string;
-    pinterest: string;
+  socialLinks?: {
+    instagram?: string;
+    twitter?: string;
+    facebook?: string;
+    pinterest?: string;
   };
 }
 
 export interface CartItem {
+  id: string;
   productId: string;
-  variantId: string;
+  variantId?: string;
   title: string;
+  slug: string;
   price: number;
-  size: ProductSize;
+  originalPrice?: number;
+  size: string;
   colorName: string;
+  colorHex?: string;
   imageSrc: string;
   quantity: number;
+  maxStock: number;
+}
+
+export interface CouponRule {
+  code: string;
+  discountPercent: number;
+  description: string;
+}
+
+export interface DemoOrder {
+  orderId: string;
+  createdAt: string;
+  items: CartItem[];
+  subtotal: number;
+  discountAmount: number;
+  couponCode?: string;
+  shippingFee: number;
+  total: number;
+  shippingAddress: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    apartment?: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
+  deliveryMethod: "express" | "priority";
+  paymentMethod: "upi" | "card" | "netbanking" | "cod";
 }

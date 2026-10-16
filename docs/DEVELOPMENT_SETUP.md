@@ -38,25 +38,31 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 Run the following validation checks prior to committing changes:
 
-### 1. TypeScript Strict Type Check
+### 1. Automated Unit Tests (Node 24 native test runner)
+```bash
+npm test
+```
+*Executes the 28-test suite covering cart calculations, coupons, shipping thresholds, variant line IDs, catalog filtering, and announcement bar configuration in < 150ms.*
+
+### 2. TypeScript Strict Type Check
 ```bash
 npx tsc --noEmit
 ```
 *Ensures all component props, data models, and utility functions satisfy strict type definitions.*
 
-### 2. ESLint
+### 3. ESLint
 ```bash
 npm run lint
 ```
 *Enforces Next.js App Router rules and React 19 hook guidelines.*
 
-### 3. Production Build
+### 4. Production Build
 ```bash
 npm run build
 ```
 *Compiles the optimized production bundle with Turbopack, validates static prerendering, and checks SCSS/Tailwind compatibility.*
 
-### 4. Production Preview
+### 5. Production Preview
 ```bash
 npm run start
 ```
